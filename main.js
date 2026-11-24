@@ -2,6 +2,7 @@ const btnEl = document.querySelector(".btn");
 const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
+const cpyNameEl = document.querySelector(".companyName");
 
 let counter = 0;
 let jobs = [];
@@ -20,7 +21,8 @@ btnEl.addEventListener("click", () => {
 function render() {
   ulEl.innerHTML = "";
 
-  jobs.forEach((job) => {
+  const search = jobs.filter((n) => n.company.includes(cpyNameEl.value)); // "" 빈문자열도 true
+  search.forEach((job) => {
     const liEl = document.createElement("li");
     const delBtnEl = document.createElement("button");
     delBtnEl.innerHTML = "삭제";
@@ -33,3 +35,7 @@ function render() {
     });
   });
 }
+
+cpyNameEl.addEventListener("input", () => {
+  render();
+});
