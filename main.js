@@ -3,10 +3,16 @@ const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
 
+let counter = 0;
 let jobs = [];
 
 btnEl.addEventListener("click", () => {
-  const job = { id: Date.now(), company: cpyEl.value, position: dptEl.value };
+  counter++;
+  const job = {
+    id: counter,
+    company: cpyEl.value,
+    position: dptEl.value,
+  };
   jobs.push(job);
   render();
 });
