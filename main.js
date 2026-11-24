@@ -3,9 +3,20 @@ const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
 
-const contentEl = document.querySelector(".content");
+const jobs = [];
+
 btnEl.addEventListener("click", () => {
-  const liEl = document.createElement("li");
-  liEl.textContent = cpyEl.value + " " + dptEl.value + " " + "저장 완료";
-  ulEl.append(liEl);
+  const job = { id: Date.now(), company: cpyEl.value, position: dptEl.value };
+  jobs.push(job);
+  render();
 });
+
+function render() {
+  ulEl.innerHTML = "";
+
+  jobs.forEach((job) => {
+    const liEl = document.createElement("li");
+    liEl.textContent = `${job.id} ${job.company} ${job.position}`;
+    ulEl.append(liEl);
+  });
+}
