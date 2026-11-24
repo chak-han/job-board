@@ -3,7 +3,7 @@ const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
 
-const jobs = [];
+let jobs = [];
 
 btnEl.addEventListener("click", () => {
   const job = { id: Date.now(), company: cpyEl.value, position: dptEl.value };
@@ -16,7 +16,14 @@ function render() {
 
   jobs.forEach((job) => {
     const liEl = document.createElement("li");
-    liEl.textContent = `${job.id} ${job.company} ${job.position}`;
+    const delBtnEl = document.createElement("button");
+    delBtnEl.innerHTML = "삭제";
+    liEl.textContent = `${job.id} ${job.company} ${job.position} `;
+    liEl.append(delBtnEl);
     ulEl.append(liEl);
+    delBtnEl.addEventListener("click", () => {
+      jobs = jobs.filter((n) => n.id !== job.id);
+      render();
+    });
   });
 }
