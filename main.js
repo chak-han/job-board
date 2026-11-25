@@ -1,13 +1,14 @@
-const btnEl = document.querySelector(".btn");
 const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
 const cpyNameEl = document.querySelector(".companyName");
+const jobFormEl = document.querySelector(".jobForm");
 
 let counter = 0;
 let jobs = [];
 
-btnEl.addEventListener("click", () => {
+jobFormEl.addEventListener("submit", (e) => {
+  e.preventDefault();
   counter++;
   const job = {
     id: counter,
