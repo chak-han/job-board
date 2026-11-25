@@ -1,18 +1,23 @@
-const btnEl = document.querySelector(".btn");
 const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
 const cpyNameEl = document.querySelector(".companyName");
+const jobFormEl = document.querySelector(".jobForm");
 
 let counter = 0;
 let jobs = [];
 
-btnEl.addEventListener("click", () => {
+jobFormEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const company = cpyEl.value.trim();
+  if (company === "") return;
+  const position = dptEl.value.trim();
+  if (position === "") return;
   counter++;
   const job = {
     id: counter,
-    company: cpyEl.value,
-    position: dptEl.value,
+    company, // 단축 속성 company: company
+    position, // 단축 속성
   };
   jobs.push(job);
   render();
