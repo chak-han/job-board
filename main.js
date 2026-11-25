@@ -9,11 +9,15 @@ let jobs = [];
 
 jobFormEl.addEventListener("submit", (e) => {
   e.preventDefault();
+  const company = cpyEl.value.trim();
+  if (company === "") return;
+  const position = dptEl.value.trim();
+  if (position === "") return;
   counter++;
   const job = {
     id: counter,
-    company: cpyEl.value,
-    position: dptEl.value,
+    company, // 단축 속성 company: company
+    position, // 단축 속성
   };
   jobs.push(job);
   render();
