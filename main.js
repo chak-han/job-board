@@ -34,12 +34,17 @@ function render() {
     liEl.textContent = `${job.id} ${job.company} ${job.position} `;
     liEl.append(delBtnEl);
     ulEl.append(liEl);
-    delBtnEl.addEventListener("click", () => {
-      jobs = jobs.filter((n) => n.id !== job.id);
-      render();
-    });
+    delBtnEl.dataset.id = job.id;
   });
 }
+
+ulEl.addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  const id = Number(btn.dataset.id);
+  jobs = jobs.filter((n) => n.id !== id);
+  render();
+});
 
 cpyNameEl.addEventListener("input", () => {
   render();
