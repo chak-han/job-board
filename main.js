@@ -1,3 +1,5 @@
+import { saveJobs, saveCounter, loadCounter, loadJobs } from "./storage.js";
+
 const cpyEl = document.querySelector(".cpy");
 const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
@@ -5,8 +7,8 @@ const cpyNameEl = document.querySelector(".companyName");
 const jobFormEl = document.querySelector(".jobForm");
 const undoBtn = document.querySelector(".undoBtn");
 
-let counter = JSON.parse(localStorage.getItem("counter")) ?? 0;
-let jobs = JSON.parse(localStorage.getItem("jobs")) ?? [];
+let counter = loadCounter();
+let jobs = loadJobs();
 let lastDeleted = null;
 
 render();
@@ -24,17 +26,10 @@ jobFormEl.addEventListener("submit", (e) => {
     position, // 단축 속성
   };
   jobs.push(job);
-  saveJobs();
-  saveCounter();
+  saveJobs(jobs);
+  saveCounter(counter);
   render();
 });
-
-function saveJobs() {
-  localStorage.setItem("jobs", JSON.stringify(jobs));
-}
-function saveCounter() {
-  localStorage.setItem("counter", JSON.stringify(counter));
-}
 
 function render() {
   ulEl.innerHTML = "";
@@ -58,7 +53,7 @@ ulEl.addEventListener("click", (e) => {
   const index = jobs.findIndex((n) => n.id === id);
   lastDeleted = { job: jobs[index], index };
   jobs = jobs.filter((n) => n.id !== id);
-  saveJobs();
+  saveJobs(jobs);
   render();
 });
 
@@ -66,7 +61,7 @@ undoBtn.addEventListener("click", () => {
   if (!lastDeleted) return;
   jobs.splice(lastDeleted.index, 0, lastDeleted.job);
   lastDeleted = null;
-  saveJobs();
+  saveJobs(jobs);
   render();
 });
 
