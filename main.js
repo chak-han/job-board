@@ -3,9 +3,11 @@ const dptEl = document.querySelector(".dpt");
 const ulEl = document.querySelector("ul");
 const cpyNameEl = document.querySelector(".companyName");
 const jobFormEl = document.querySelector(".jobForm");
+const undoBtn = document.querySelector(".undoBtn");
 
 let counter = 0;
 let jobs = [];
+let lastDeleted = null;
 
 jobFormEl.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -42,7 +44,16 @@ ulEl.addEventListener("click", (e) => {
   const btn = e.target.closest("button");
   if (!btn) return;
   const id = Number(btn.dataset.id);
+  const index = jobs.findIndex((n) => n.id === id);
+  lastDeleted = { job: jobs[index], index };
   jobs = jobs.filter((n) => n.id !== id);
+  render();
+});
+
+undoBtn.addEventListener("click", () => {
+  if (!lastDeleted) return;
+  jobs.splice(lastDeleted.index, 0, lastDeleted.job);
+  lastDeleted = null;
   render();
 });
 
