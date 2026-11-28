@@ -5,9 +5,11 @@ const cpyNameEl = document.querySelector(".companyName");
 const jobFormEl = document.querySelector(".jobForm");
 const undoBtn = document.querySelector(".undoBtn");
 
-let counter = 0;
-let jobs = [];
+let counter = JSON.parse(localStorage.getItem("counter")) ?? 0;
+let jobs = JSON.parse(localStorage.getItem("jobs")) ?? [];
 let lastDeleted = null;
+
+render();
 
 jobFormEl.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -22,8 +24,17 @@ jobFormEl.addEventListener("submit", (e) => {
     position, // 단축 속성
   };
   jobs.push(job);
+  saveJobs();
+  saveCounter();
   render();
 });
+
+function saveJobs() {
+  localStorage.setItem("jobs", JSON.stringify(jobs));
+}
+function saveCounter() {
+  localStorage.setItem("counter", JSON.stringify(counter));
+}
 
 function render() {
   ulEl.innerHTML = "";
@@ -47,6 +58,7 @@ ulEl.addEventListener("click", (e) => {
   const index = jobs.findIndex((n) => n.id === id);
   lastDeleted = { job: jobs[index], index };
   jobs = jobs.filter((n) => n.id !== id);
+  saveJobs();
   render();
 });
 
@@ -54,6 +66,7 @@ undoBtn.addEventListener("click", () => {
   if (!lastDeleted) return;
   jobs.splice(lastDeleted.index, 0, lastDeleted.job);
   lastDeleted = null;
+  saveJobs();
   render();
 });
 
